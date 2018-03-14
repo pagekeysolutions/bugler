@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary     = "Bugler!"
   s.description = "Sleek static site generation"
   s.authors     = ["Steve Grice"]
-  s.email       = 'stephengrice@live.com'
+  s.email       = 'steve@pagekeysolutions.com'
   s.files       = ["lib/bugler.rb"]
   s.homepage    =
     'http://rubygems.org/gems/bugler'
