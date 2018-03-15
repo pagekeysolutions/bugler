@@ -2,4 +2,4 @@
 
 require 'bugler'
 
-puts Bugler.hi
+exit(Bugler::CLI.exec(ARGV))

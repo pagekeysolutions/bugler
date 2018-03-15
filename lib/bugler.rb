@@ -3,3 +3,6 @@ class Bugler
 		"Toot toot! Hello world!"
 	end
 end
+
+require 'bugler/cli'
+require 'bugler/config'
