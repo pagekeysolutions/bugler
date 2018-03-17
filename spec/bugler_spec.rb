@@ -1,5 +1,6 @@
 require 'bugler'
 require 'bugler/config'
+require 'fileutils'
 
 describe Bugler do
   context "confirming default method" do
@@ -28,6 +29,9 @@ describe Bugler::CLI do
     end
   end
   context ".init" do
+    before(:context) do
+      SAMPLE_NAME = "sample_app"
+    end
     it "fails when no name is provided" do
       argv = []
       expect{ Bugler::CLI.init(argv) }.to raise_error(Bugler::Config::ERROR_INIT_NO_NAME)
@@ -37,10 +41,14 @@ describe Bugler::CLI do
       expect{ Bugler::CLI.init(argv) }.to raise_error(Bugler::Config::ERROR_INIT_ARGV)
     end
     it "creates directory structure for blank app" do
-      argv = %w(sample)
+      argv = [SAMPLE_NAME]
       Bugler::CLI.init(argv)
-      expect(File).to exist("sample")
-      Dir.rmdir "sample"
+      expect(File).to exist(SAMPLE_NAME)
+      expect(File).to exist(File.join(SAMPLE_NAME, ".bugler"))
+      expect(File).to exist(File.join(SAMPLE_NAME, Bugler::Config::SOURCE_DIRNAME))
+    end
+    after(:context) do
+      FileUtils.rm_r(SAMPLE_NAME) if File.exists?(SAMPLE_NAME)
     end
   end
 end

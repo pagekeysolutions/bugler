@@ -19,7 +19,14 @@ module Bugler
 			raise Bugler::Config::ERROR_INIT_NO_NAME unless argv.any?
 			# Create directory structure
 			name = argv.shift
-			Dir.mkdir name
+			dirs = [name, File.join(name, Bugler::Config::SOURCE_DIRNAME)]
+			files = [File.join(name, ".bugler"), File.join(name, Bugler::Config::SOURCE_DIRNAME, "index.erb")]
+			dirs.each do |d|
+				Dir.mkdir d unless File.exists?(d)
+			end
+			files.each do |f|
+				File.write(f, "") unless File.exists?(f)
+			end
 		end
 	end
 end

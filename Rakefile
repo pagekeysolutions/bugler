@@ -6,6 +6,8 @@ require 'bugler/version'
 
 RSpec::Core::RakeTask.new(:spec)
 
+BUILT_GEM = 'bugler-' + Bugler::VERSION + '.gem'
+
 task :default => :spec
 
 task :build do
@@ -13,5 +15,16 @@ task :build do
 end
 
 task :install => :build do
-  system 'gem install bugler-' + Bugler::VERSION + '.gem'
+  system 'gem install ' + BUILT_GEM
+
+end
+
+task :publish => :build do
+  system 'gem push ' + BUILT_GEM
+  system 'git tag -a ' + Bugler::VERSION + ' -m "Version ' + Bugler::VERSION + '"'
+  system 'git push --tags'
+end
+
+task :clean do
+  system 'rm ' + BUILT_GEM
 end

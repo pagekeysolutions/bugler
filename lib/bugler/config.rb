@@ -9,5 +9,7 @@ module Bugler
 }
     ERROR_INIT_NO_NAME = "Error: Please provide a name for your app"
     ERROR_INIT_ARGV = "Error: Provided argv argument must be an array"
+
+    SOURCE_DIRNAME = "src"
   end
 end
