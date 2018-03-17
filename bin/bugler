@@ -2,4 +2,9 @@
 
 require 'bugler'
 
-exit(Bugler::CLI.exec(ARGV))
+begin
+  Bugler::CLI.exec(ARGV)
+rescue RuntimeError => e
+  puts e
+  exit 1
+end

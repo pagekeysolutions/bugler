@@ -1,5 +1,4 @@
 require 'bugler'
-require 'bugler/cli'
 require 'bugler/config'
 
 describe Bugler do
@@ -19,8 +18,12 @@ describe Bugler::CLI do
     end
     context "when user calls init" do
       it "invokes .init" do
-        expect(Bugler::CLI).to receive(:init) # .with (arg)
+        expect(Bugler::CLI).to receive(:init).with([]) # .with (arg)
         Bugler::CLI.exec(['init'])
+      end
+      it "passes array to init" do
+        expect(Bugler::CLI).to receive(:init).with(["app_name"]) # .with (arg)
+        Bugler::CLI.exec(['init', 'app_name'])
       end
     end
   end
@@ -28,6 +31,10 @@ describe Bugler::CLI do
     it "fails when no name is provided" do
       argv = []
       expect{ Bugler::CLI.init(argv) }.to raise_error(Bugler::Config::ERROR_INIT_NO_NAME)
+    end
+    it "fails when a string argument is provided" do
+      argv = "init"
+      expect{ Bugler::CLI.init(argv) }.to raise_error(Bugler::Config::ERROR_INIT_ARGV)
     end
     it "creates directory structure for blank app" do
       argv = %w(sample)

@@ -1,9 +1,17 @@
-begin
-  require 'rspec/core/rake_task'
+lib = File.expand_path("../lib", __FILE__)
+$:.unshift lib unless $:.include?(lib)
 
-  RSpec::Core::RakeTask.new(:spec)
+require 'rspec/core/rake_task'
+require 'bugler/version'
 
-  task :default => :spec
-rescue LoadError
-  # no rspec available
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec
+
+task :build do
+  system 'gem build bugler.gemspec'
+end
+
+task :install => :build do
+  system 'gem install bugler-' + Bugler::VERSION + '.gem'
 end
