@@ -9,6 +9,7 @@ module Bugler
 }
     ERROR_INIT_NO_NAME = "Error: Please provide a name for your app"
     ERROR_INIT_ARGV = "Error: Provided argv argument must be an array"
+    ERROR_SERVER_NOT_A_PROJECT = "Error: Current directory is not a bugler project. Try 'bugler init <NAME>'"
 
     SOURCE_DIRNAME = "src"
   end

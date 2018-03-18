@@ -2,6 +2,8 @@ require 'bugler'
 require 'bugler/config'
 require 'fileutils'
 
+SAMPLE_NAME = File.join(File.expand_path("."), "sample_app")
+
 describe Bugler do
   context "confirming default method" do
     it "returns something containing Hello world" do
@@ -30,7 +32,6 @@ describe Bugler::CLI do
   end
   context ".init" do
     before(:context) do
-      SAMPLE_NAME = "sample_app"
     end
     it "fails when no name is provided" do
       argv = []
@@ -48,7 +49,27 @@ describe Bugler::CLI do
       expect(File).to exist(File.join(SAMPLE_NAME, Bugler::Config::SOURCE_DIRNAME))
     end
     after(:context) do
-      FileUtils.rm_r(SAMPLE_NAME) if File.exists?(SAMPLE_NAME)
+      Dir.chdir __dir__
+      FileUtils.rm_r SAMPLE_NAME if File.exists? SAMPLE_NAME
+    end
+  end
+  context ".server" do
+    before(:context) do
+      Bugler::CLI.init [SAMPLE_NAME]
+    end
+    it "fails when no .bugler file exists in current directory" do
+      expect{ Bugler::CLI.server }.to raise_error(Bugler::Config::ERROR_SERVER_NOT_A_PROJECT)
+    end
+    it "does not fail when in a bugler project" do
+      Dir.chdir SAMPLE_NAME
+      expect{Bugler::CLI.server}.not_to raise_error
+    end
+    it "starts a server" do
+
+    end
+    after(:context) do
+      Dir.chdir __dir__
+      FileUtils.rm_r SAMPLE_NAME if File.exists? SAMPLE_NAME
     end
   end
 end

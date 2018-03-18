@@ -28,5 +28,9 @@ module Bugler
 				File.write(f, "") unless File.exists?(f)
 			end
 		end
+		def self.server
+			raise Bugler::Config::ERROR_SERVER_NOT_A_PROJECT unless File.exists?(".bugler")
+			
+		end
 	end
 end
