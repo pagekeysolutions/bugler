@@ -3,7 +3,7 @@
 require 'bugler'
 
 begin
-  Bugler::CLI.exec(ARGV)
+  Bugler::CLI.exec(ARGV, Dir.pwd)
 rescue RuntimeError => e
   puts e
   exit 1
