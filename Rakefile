@@ -26,5 +26,5 @@ task :publish => :build do
 end
 
 task :clean do
-  system 'rm ' + BUILT_GEM
+  system 'rm *.gem'
 end

@@ -44,7 +44,7 @@ module Bugler
 				self.build(working_directory)
 			end
 
-			puts "Starting Bugler test server on port %i..." % port
+			puts "Starting Bugler test server at http://localhost:%i..." % port
 
 			server = WEBrick::HTTPServer.new :Port => port, :DocumentRoot => File.join(working_directory, 'build')
 
